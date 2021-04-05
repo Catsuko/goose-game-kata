@@ -9,7 +9,7 @@ RSpec.describe Goose::Game do
       end
     end
 
-    context 'when there are two participants at the start' do
+    context 'from start' do
       it 'Pippo moves to square 6' do
         name = player_names.first
         expect(game.update("move #{name} 4, 2")).to eq "#{name} rolls 4, 2. #{name} moves from Start to 6"
@@ -18,6 +18,15 @@ RSpec.describe Goose::Game do
       it 'Pluto moves to square 4' do
         name = player_names.last
         expect(game.update("move #{name} 2, 2")).to eq "#{name} rolls 2, 2. #{name} moves from Start to 4"
+      end
+    end
+
+    context 'from square 6' do
+      let(:name) { player_names.first }
+
+      it 'Pippo moves to square 11' do
+        game.update("move #{name} 4, 2")
+        expect(game.update("move #{name} 3, 2")).to eq "#{name} rolls 3, 2. #{name} moves from 6 to 11"
       end
     end
   end
